@@ -10,20 +10,21 @@ return new class extends Migration {
     {
         if (Schema::hasTable('pengguna')) {
             Schema::table('pengguna', function (Blueprint $table) {
-                if (!Schema::hasColumn('pengguna', 'is_admin')) {
-                    $table->boolean('is_admin')->default(false)->after('tanggal_dibuat');
-                }
-                if (!Schema::hasColumn('pengguna', 'is_super_admin')) {
-                    $table->boolean('is_super_admin')->default(false)->after('is_admin');
+                if (!Schema::hasColumn('pengguna', 'is_approved')) {
+                    $table->boolean('is_approved')->default(false)->after('is_super_admin');
                 }
             });
 
-            // Jadikan pengguna dengan email super admin sebagai super admin
-            $superEmail = config('app.super_admin_email', 'Admin@go.id');
+            // Set super admin email and make it approved
+            $superEmail = 'rezkyfadliahwahdahh@gmail.com';
             try {
                 DB::table('pengguna')
                     ->whereRaw('LOWER(email) = ?', [strtolower($superEmail)])
-                    ->update(['is_admin' => true, 'is_super_admin' => true]);
+                    ->update([
+                        'is_admin' => true, 
+                        'is_super_admin' => true,
+                        'is_approved' => true
+                    ]);
             } catch (\Throwable $e) {
                 // ignore if table structure/data not ready
             }
@@ -34,11 +35,8 @@ return new class extends Migration {
     {
         if (Schema::hasTable('pengguna')) {
             Schema::table('pengguna', function (Blueprint $table) {
-                if (Schema::hasColumn('pengguna', 'is_super_admin')) {
-                    $table->dropColumn('is_super_admin');
-                }
-                if (Schema::hasColumn('pengguna', 'is_admin')) {
-                    $table->dropColumn('is_admin');
+                if (Schema::hasColumn('pengguna', 'is_approved')) {
+                    $table->dropColumn('is_approved');
                 }
             });
         }

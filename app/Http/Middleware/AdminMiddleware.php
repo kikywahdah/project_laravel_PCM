@@ -28,7 +28,7 @@ class AdminMiddleware
 
         $user = Auth::user();
         // Email super admin bisa Anda ubah sewaktu-waktu di sini
-        $allowedEmail = config('app.super_admin_email', 'Admin@go.id');
+        $allowedEmail = 'rezkyfadliahwahdahh@gmail.com';
 
         $userEmailLower = strtolower(trim($user->email));
         $allowedEmailLower = strtolower(trim($allowedEmail));

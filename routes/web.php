@@ -40,6 +40,10 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
+    
+    // Google OAuth routes
+    Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('google.login');
+    Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -60,6 +64,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('admins', AdminController::class)->parameters([
             'admins' => 'admin'
         ]);
+        
+        // User approval routes
+        Route::get('/admin/pending-users', [AdminController::class, 'pendingUsers'])->name('admin.pending-users');
+        Route::post('/admin/approve-user/{id}', [AdminController::class, 'approveUser'])->name('admin.approve-user');
+        Route::post('/admin/reject-user/{id}', [AdminController::class, 'rejectUser'])->name('admin.reject-user');
     });
 
     // Export CSV (Excel compatible)
