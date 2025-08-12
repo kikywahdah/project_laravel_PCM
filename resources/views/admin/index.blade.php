@@ -6,9 +6,6 @@
         <h4 class="mb-0 fw-bold text-primary">
             <i class="fas fa-users-cog me-2"></i>Manajemen Admin & Pengguna
         </h4>
-        <a class="btn btn-primary" href="{{ route('admins.create') }}">
-            <i class="fas fa-plus me-1"></i>Tambah Admin
-        </a>
     </div>
 
     <!-- Pending Users Section -->

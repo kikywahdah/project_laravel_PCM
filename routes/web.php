@@ -59,8 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
-    // Admin management (only admin)
-    Route::middleware('admin')->group(function () {
+    // Admin management (only super admin)
+    Route::middleware('superadmin')->group(function () {
         Route::resource('admins', AdminController::class)->parameters([
             'admins' => 'admin'
         ]);
